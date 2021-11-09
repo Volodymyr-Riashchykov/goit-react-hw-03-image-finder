@@ -28,10 +28,12 @@ export default class Info extends Component {
                 else {
                     this.setState({status:"reject",error: toast.error("Введите другую строку поиска"),})
                 }
-                window.scrollTo({
-                    top: document.documentElement.scrollHeight,
-                    behavior: 'smooth',
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: document.documentElement.scrollHeight,
+                        behavior: 'smooth',
                     })
+                },2000)
             }
             
         } catch (error) {
