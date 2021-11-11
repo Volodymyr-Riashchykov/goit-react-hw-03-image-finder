@@ -18,6 +18,10 @@ export default class App extends Component {
   }
   handleNoBtn = () => {
     this.setState({ isBtn: false })
+    window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth',
+                })
   }
   handleClick = () => {
     this.setState(prevState => { return {page:prevState.page + 1 }})

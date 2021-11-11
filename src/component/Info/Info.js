@@ -19,25 +19,34 @@ export default class Info extends Component {
         try{
             if (prevProps.searh !== this.props.searh || prevProps.page !== this.props.page) {
                 this.setState({ status: "pending" })
-                this.props.handleNoBtn();
-                if(prevProps.searh !== this.props.searh) { prevState.images = []; }
-                this.setState({ images: [...prevState.images, ...(await Api(this.props.searh, this.props.page))], page: this.props.page, status: "resolve" })
+                
+                if (prevProps.searh !== this.props.searh) {
+                    
+                    prevState.images = [];
+                }
+                // const as = (await Api(this.props.searh, this.props.page))
+                
+                this.setState({ images: [...prevState.images, ...(await Api(this.props.searh, this.props.page))], page: this.props.page, status: "resolve" });
+                //
                 if (this.state.images.length !== 0) {
                     this.props.handleBtn();
                 }
                 else {
+                    this.props.handleNoBtn();
                     this.setState({status:"reject",error: toast.error("Введите другую строку поиска"),})
                 }
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: document.documentElement.scrollHeight,
-                        behavior: 'smooth',
-                    })
-                },2000)
+
+               window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth',
+                })
             }
             
         } catch (error) {
             this.setState({status:"reject",error: toast.error("Woops, something went wrong... Try again later."),})
+        } finally {
+            
+                
         }
     }
     onClickGal = img => {
@@ -58,12 +67,17 @@ export default class Info extends Component {
     
         if (status === "pending") {
             return (
-                <Spinner />
+                <>
+                    {(images.length > 0 &&<Gallery images={images} onClickGal={this.onClickGal} />)}
+                    <Spinner />
+                </>
             )
             }
         if (status === "resolve") {
             return (
                 <>
+                    {/* {console.log('asas')} */}
+                    <div></div>
                     <Gallery images={images} onClickGal={this.onClickGal} />
                     {isModal && (
                         <Modal onClose={this.onClose} >
