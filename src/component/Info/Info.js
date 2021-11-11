@@ -76,7 +76,6 @@ export default class Info extends Component {
         if (status === "resolve") {
             return (
                 <>
-                    {/* {console.log('asas')} */}
                     <div></div>
                     <Gallery images={images} onClickGal={this.onClickGal} />
                     {isModal && (
