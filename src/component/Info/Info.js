@@ -18,21 +18,20 @@ export default class Info extends Component {
     async componentDidUpdate(prevProps, prevState) {
         try{
             if (prevProps.searh !== this.props.searh || prevProps.page !== this.props.page) {
-                this.setState({ status: "pending" })
-                
+                this.setState({ status: "pending",error: null})
+                this.props.handleNoBtn();
                 if (prevProps.searh !== this.props.searh) {
                     
                     prevState.images = [];
                 }
-                // const as = (await Api(this.props.searh, this.props.page))
                 
                 this.setState({ images: [...prevState.images, ...(await Api(this.props.searh, this.props.page))], page: this.props.page, status: "resolve" });
                 //
-                if (this.state.images.length !== 0) {
+                if (this.state.images.length > 0) {
                     this.props.handleBtn();
                 }
                 else {
-                    this.props.handleNoBtn();
+                    
                     this.setState({status:"reject",error: toast.error("Введите другую строку поиска"),})
                 }
 
@@ -57,41 +56,17 @@ export default class Info extends Component {
     }
 
     render() {
-        const { status,images,modal,isModal } = this.state
-        if (status === "idle") {
-            return (
-                <div></div>
-            )
-                }
-        
-    
-        if (status === "pending") {
-            return (
-                <>
-                    {(images.length > 0 &&<Gallery images={images} onClickGal={this.onClickGal} />)}
-                    <Spinner />
-                </>
-            )
-            }
-        if (status === "resolve") {
-            return (
-                <>
-                    <div></div>
-                    <Gallery images={images} onClickGal={this.onClickGal} />
-                    {isModal && (
-                        <Modal onClose={this.onClose} >
-                            {<img src={modal} alt="" />}
-                        </Modal>
-                    )
-                    }
-                </>
-            );
-                }
-        if (status === "reject") {
-            return (
+        const { status, images, modal, isModal } = this.state
+        return (
+            <>
+                {(images.length > 0 && <Gallery images={images} onClickGal={this.onClickGal} />)}
+                {status === "pending" && <Spinner />}
+                {isModal && (<Modal onClose={this.onClose} >
+                    {<img src={modal} alt="" />}
+                </Modal>)}
                 <ToastContainer />
-            )
-                }
+            </>
+        )
         
     }
 }
