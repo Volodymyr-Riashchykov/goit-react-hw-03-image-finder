@@ -4,6 +4,7 @@ import s from "./GalleryItem.module.css";
 export default function GalleryItem({ image,onClickGal }) {
     const { webformatURL,largeImageURL,tags } = image
     return (
+        <>
         <li className={s.item}>
             <img
                 src={webformatURL}
@@ -12,7 +13,12 @@ export default function GalleryItem({ image,onClickGal }) {
                 data-source={largeImageURL}
                 onClick={() => onClickGal({ largeImageURL })}
             />
-        </li>
+            </li>
+            {/* {window.scrollTo({
+                        top: document.documentElement.scrollHeight,
+                        behavior: 'smooth',
+                    })} */}
+            </>
     )
 }
 

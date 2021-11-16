@@ -4,12 +4,15 @@ import s from "./Gallery.module.css";
 
 export default function Gallery({ images,onClickGal }) {
     return (
-        <ul className={s.list} >
-            {images.map((image,i) => {
-                return (<GalleryItem image={image} key={i} onClickGal={onClickGal}/>)
-            })
-            }
-        </ul>
+        <>
+            <ul className={s.list} >
+                {images.map((image,i) => {
+                    return (<GalleryItem image={image} key={i} onClickGal={onClickGal}/>)
+                })
+                }
+            </ul>
+            
+        </>
     )
 }
 
